@@ -1,0 +1,45 @@
+{
+  "name": "documon/core",
+  "description": "Core library of Documon",
+  "type": "library",
+  "authors": [
+    {
+      "name": "Jace Ju",
+      "email": "jaceju@gmail.com"
+    }
+  ],
+  "minimum-stability": "stable",
+  "require": {
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "roave/security-advisories": "dev-master",
+    "phpunit/phpunit": "^7.0|^8.0",
+    "mockery/mockery": "^1.2",
+    "codedungeon/phpunit-result-printer": "^0.26"
+  },
+  "suggest": {
+    "spatie/phpunit-watcher": "Automatically rerun PHPUnit tests when source code changes (Install globally)",
+    "mikey179/vfsStream": "Virtual file system to mock the real file system in unit tests."
+  },
+  "autoload": {
+    "psr-4": {
+      "Documon\\": "src/"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Documon\\Core\\Tests\\": "tests/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "path",
+      "url": "/Users/jaceju/Projects/documon/contract"
+    }
+  ],
+  "config": {
+    "process-timeout": 0
+  },
+  "license": "MIT"
+}
