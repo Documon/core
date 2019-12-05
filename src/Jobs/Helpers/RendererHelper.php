@@ -3,16 +3,10 @@
 namespace Documon\Jobs\Helpers;
 
 use Documon\RendererInterface;
+use RuntimeException;
 
 trait RendererHelper
 {
-    /**
-     * @var array
-     */
-    protected static $rendererMapping = [
-        'default' => Example::class,
-    ];
-
     /**
      * @param RendererInterface $renderer
      */
@@ -38,11 +32,6 @@ trait RendererHelper
             return new $rendererClass($config);
         }
 
-        // Use internal renderer
-        $rendererType = $config['type'];
-
-        return isset(static::$rendererMapping[$rendererType])
-            ? new static::$rendererMapping[$rendererType]($config)
-            : null;
+        throw new RuntimeException("No renderer engine be defined");
     }
 }
