@@ -3,6 +3,7 @@
 namespace Documon\Jobs;
 
 use Closure;
+use Documon\Jobs\Helpers\AutoloaderHelper;
 use Exception;
 use Documon\Jobs\Helpers\MessageHelper;
 use Documon\Jobs\Helpers\RendererHelper;
@@ -14,7 +15,7 @@ use React\EventLoop\LoopInterface;
 
 class ServeJob extends AbstractJob
 {
-    use RendererHelper;
+    use AutoloaderHelper, RendererHelper;
 
     /**
      * @var LoopInterface
@@ -28,6 +29,7 @@ class ServeJob extends AbstractJob
     {
         try {
             $config = $this->readConfig('serve');
+            $this->autoload();
             $this->setupWorkDirectory($config);
             $this->executeChildProcesses($config);
         } catch (Exception $exception) {

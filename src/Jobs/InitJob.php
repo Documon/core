@@ -2,8 +2,8 @@
 
 namespace Documon\Jobs;
 
+use Documon\Jobs\Helpers\AutoloaderHelper;
 use Documon\Jobs\Helpers\FileSystemHelper;
-use Documon\Renderer\Example;
 use Documon\RendererInterface;
 use Exception;
 use Illuminate\Filesystem\Filesystem;
@@ -13,12 +13,12 @@ use Symfony\Component\Yaml\Yaml;
 
 class InitJob extends AbstractJob
 {
-    use FileSystemHelper;
+    use AutoloaderHelper, FileSystemHelper;
 
     /**
      * @var string
      */
-    protected $engine = Example::class;
+    protected $engine = '';
 
     /**
      * @var Filesystem
@@ -36,6 +36,7 @@ class InitJob extends AbstractJob
     public function run(): void
     {
         try {
+            $this->autoload();
             $this->checkEngine();
             $this->setUp();
             $this->copyTemplateFile();

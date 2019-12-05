@@ -2,6 +2,7 @@
 
 namespace Documon\Jobs;
 
+use Documon\Jobs\Helpers\AutoloaderHelper;
 use Documon\RendererInterface;
 use Exception;
 use Documon\Jobs\Helpers\FileSystemHelper;
@@ -10,7 +11,7 @@ use RuntimeException;
 
 class BuildJob extends AbstractJob
 {
-    use RendererHelper, FileSystemHelper;
+    use AutoloaderHelper, RendererHelper, FileSystemHelper;
 
     /**
      * @return void
@@ -19,11 +20,15 @@ class BuildJob extends AbstractJob
     {
         try {
             $config = $this->readConfig('build');
-            $renderer = $this->createRenderer($config);
+
+            $this->autoload();
             $this->checkOutputDirectory($config);
             $this->setupWorkDirectory($config);
+
+            $renderer = $this->createRenderer($config);
             $this->renderTemplate($renderer);
             $this->runBuildCommand($renderer);
+
             $this->moveBuiltDirectory($config);
             $this->removeWorkDirectory();
         } catch (Exception $exception) {
