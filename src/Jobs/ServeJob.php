@@ -29,11 +29,14 @@ class ServeJob extends AbstractJob
     {
         try {
             $config = $this->readConfig('serve');
+
             $this->autoload();
             $this->setupWorkDirectory($config);
             $this->executeChildProcesses($config);
         } catch (Exception $exception) {
             $this->errorHappened($exception);
+        } finally {
+            $this->removeWorkDirectory();
         }
     }
 
@@ -48,7 +51,7 @@ class ServeJob extends AbstractJob
             $this->setMessageHandlers($process);
             $this->addTerminationListeners($process->getTerminationListener());
             $process->execute($this->loop);
-        };
+        }
 
         $this->addTerminationListeners(function (int $signal) {
             $this->removeWorkDirectory();

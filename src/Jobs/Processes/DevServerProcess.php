@@ -68,17 +68,16 @@ class DevServerProcess implements ProcessInterface
         $this->process->start($loop);
 
         $this->process->stdout->on('data', function ($chunk) {
-            preg_match('#Server running at (.+)#', $chunk, $matches);
+            $this->debug($chunk);
 
-            if (isset($matches[1])) {
-                $this->info("Starting preview server on " . $matches[1]);
-            } else {
-                $this->debug($chunk);
+            preg_match('#Server running at (.+)#', $chunk, $normalStart);
+            preg_match('#address already in use (.+)#', $chunk, $addressError);
+
+            if (isset($normalStart[1])) {
+                $this->info("Starting preview server on " . $normalStart[1]);
+            } elseif (isset($addressError[1])) {
+                throw new Exception("Address already in use " . $addressError[1]);
             }
-        });
-
-        $this->process->stdout->on('error', function (Exception $e) {
-            $this->error('error: ' . $e->getMessage());
         });
     }
 
