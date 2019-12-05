@@ -32,14 +32,6 @@ $app->register(Goez\Documon\RendererServiceProvider::class);
 
 **重要：如果在 Laravel/Lumen 應用程式中安裝這個套件的話，可能會有版本衝突的問題；因此建議改用 [goez/documon](https://github.com/goez-tools/documon/blob/master/README_TW.md) 提供的 binary 來建置線上文件。**
 
-## 指令使用方式
-
-請參考 [goez/documon](https://github.com/goez-tools/documon/blob/master/README_TW.md) 。
-
-## 建立自訂 Renderer
-
-
-
 ## 修改
 
 先以全域方式安裝 `spatie/phpunit-watcher` 套件:
